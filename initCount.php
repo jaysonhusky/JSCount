@@ -3,7 +3,7 @@
 $file = 'click_data.txt';
 //Open the file in read write mode
 $fh = fopen($file, 'r+');
-//Assign the page referene posted from page to a variable
+//Assign the page reference posted from page to a variable
 $id = $_REQUEST['id'];
 //Initialize lines variable
 $lines = '';
@@ -11,8 +11,10 @@ $lines = '';
 while(!feof($fh)){
     //Split the line using comma delimiter
     $row = explode(',', fgets($fh));
-    $pageref = trim($row[0]);
-    $count = trim($row[1]);
+	// We're not updating "$row[0]" as this is the name of the variable.
+	$pageref = trim($row[0]); 
+	// Identify number and check to increment it
+    $count = trim($row[1]); 
     if(!empty($pageref)){
     	if($pageref == $id){
     	 //Increment count
@@ -23,6 +25,7 @@ while(!feof($fh)){
     	$lines .= "$pageref,$count\r\n";
     }
 }
+// Update file and close
 file_put_contents($file, $lines);
 fclose($fh);
 ?>
