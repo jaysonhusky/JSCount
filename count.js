@@ -1,16 +1,24 @@
+var _req2Count = 0;
+
 function addCount(e) {
-	var id=e.getAttribute('data-lc'); // Leave this as it is. The script knows to look for this attribute to count the clicks!
-	var post='id='+id; 
-	var req=new XMLHttpRequest(); // Assembles the data and begins to pass it along to the initCount.php script.
-	req.open('POST','/initCount.php',true);
-	req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-	req.onreadystatechange=function(){
-		// Checking for an OK from the server before returning data, if it fails, no data is returned.
-            if(req.readyState !== 4 || req.status !== 200) return;
-            document.getElementById("clicks").innerHTML=req.responseText;
-	 };
-	 // Send data to the script.
-	req.send(post);
+	if(_req2Count>0){
+		/*Click Obtained, No Further Action*/ 
+	}
+	else {
+		var id=e.getAttribute('data-lc'); // Leave this as it is. The script knows to look for this attribute to count the clicks!
+		var post='id='+id; 
+		var req=new XMLHttpRequest(); // Assembles the data and begins to pass it along to the initCount.php script.
+		req.open('POST','/initCount.php',true);
+		req.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		req.onreadystatechange=function(){
+			// Checking for an OK from the server before returning data, if it fails, no data is returned.
+				if(req.readyState !== 4 || req.status !== 200) return;
+				document.getElementById("clicks").innerHTML=req.responseText;
+		};
+		// Send data to the script.
+		req.send(post);
+		_req2Count = _req2Count + 1;
+	}
 };
 
 function countCheck(){
